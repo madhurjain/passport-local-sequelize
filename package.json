@@ -1,7 +1,7 @@
 {
   "name": "passport-local-sequelize",
   "description": "Sequelize plugin that simplifies building username and password login with Passport",
-  "version": "0.1",
+  "version": "0.1.2",
   "main": "lib/passport-local-sequelize.js",  
   "author": {
     "name": "Madhur Jain",
@@ -16,6 +16,11 @@
     "login"
   ],
   "dependencies": {
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+	"sequelize": "~1.7.0"	
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madhurjain/passport-local-sequelize.git"
   }
 }
