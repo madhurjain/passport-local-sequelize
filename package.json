@@ -1,11 +1,18 @@
 {
   "name": "passport-local-sequelize",
   "description": "Sequelize plugin that simplifies building username and password login with Passport",
-  "version": "0.1.2",
-  "main": "lib/passport-local-sequelize.js",  
+  "version": "1.0.0",
+  "main": "lib/passport-local-sequelize.js",
   "author": {
     "name": "Madhur Jain",
     "email": "mformadhur@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madhurjain/passport-local-sequelize.git"
+  },
+  "scripts": {
+    "test": "node_modules/jshint/bin/jshint lib/*.js test/*.js && node_modules/mocha/bin/mocha -R spec"
   },
   "license": "MIT",
   "keywords": [
@@ -16,11 +23,14 @@
     "login"
   ],
   "dependencies": {
-    "passport-local": "~0.1.6",
-	"sequelize": "~1.7.0"	
+    "passport-local": "~1.0.0",
+    "sequelize": "~1.7.2",
+    "lodash": "~2.4.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/madhurjain/passport-local-sequelize.git"
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "jshint": "~2.5.0",
+    "sqlite3": "~2.2.3",
+    "should": "~3.3.1"
   }
 }
