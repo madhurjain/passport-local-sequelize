@@ -5,3 +5,4 @@ examples
 *.tgz
 *~
 .travis.yml
+*.sqlite
