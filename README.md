@@ -4,7 +4,13 @@ that simplifies building username and password login with [Passport](http://pass
 
 This plugin is a mod to the original [Passport-Local Mongoose](https://github.com/saintedlama/passport-local-mongoose) plugin.
 
+# Installation
+
+    $ npm install passport-local-sequelize
+
 # Usage
+
+
 
 ```js
 /* /models/user.js */
