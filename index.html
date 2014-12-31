@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>passport-local-sequelize by madhurjain</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>passport-local-sequelize</h1>
+        <p>Sequelize plugin for building username and password login with passport</p>
+
+        <p class="view"><a href="https://github.com/madhurjain/passport-local-sequelize">View the Project on GitHub <small>madhurjain/passport-local-sequelize</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/madhurjain/passport-local-sequelize/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/madhurjain/passport-local-sequelize/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/madhurjain/passport-local-sequelize">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="passport-local-sequelize" class="anchor" href="#passport-local-sequelize" aria-hidden="true"><span class="octicon octicon-link"></span></a>Passport-Local-Sequelize</h1>
+
+<p>Passport-Local-Sequelize is a <a href="http://sequelizejs.com/">Sequelize</a> plugin 
+that simplifies building username and password login with <a href="http://passportjs.org">Passport</a></p>
+
+<p>This plugin is a mod to the original <a href="https://github.com/saintedlama/passport-local-mongoose">Passport-Local Mongoose</a> plugin.</p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<pre><code>$ npm install passport-local-sequelize
+</code></pre>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<div class="highlight highlight-js"><pre><span class="pl-c">/* /models/user.js */</span>
+
+<span class="pl-c">// Require all the stuff</span>
+<span class="pl-s">var</span> Sequelize <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>sequelize<span class="pl-pds">'</span></span>),
+    passportLocalSequelize <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>passport-local-sequelize<span class="pl-pds">'</span></span>);
+
+<span class="pl-c">// Setup sequelize db connection</span>
+<span class="pl-s">var</span> mydb <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Sequelize</span>(<span class="pl-s1"><span class="pl-pds">'</span>mydb<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>myuser<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>mypass<span class="pl-pds">'</span></span>, {
+    dialect<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>sqlite<span class="pl-pds">'</span></span>,
+
+    storage<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>mydb.sqlite<span class="pl-pds">'</span></span>
+});
+
+<span class="pl-c">// A helper to define the User model with username, password fields</span>
+<span class="pl-s">var</span> User <span class="pl-k">=</span> passportLocalSequelize.defineUser(mydb, {
+    favoriteColor<span class="pl-k">:</span> Sequelize.STRING
+});
+
+<span class="pl-c">// --- OR ---</span>
+
+<span class="pl-c">// Define a User yourself and use attachToUser</span>
+
+<span class="pl-s">var</span> User <span class="pl-k">=</span> mydb.define(<span class="pl-s1"><span class="pl-pds">'</span>User<span class="pl-pds">'</span></span>, {
+    nick<span class="pl-k">:</span> Sequelize.STRING,
+    myhash<span class="pl-k">:</span> Sequelize.STRING,
+    mysalt<span class="pl-k">:</span> Sequelize.STRING
+});
+
+passportLocalSequelize.attachToUser(User, {
+    usernameField<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>nick<span class="pl-pds">'</span></span>,
+    hashField<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>myhash<span class="pl-pds">'</span></span>,
+    saltField<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>mysalt<span class="pl-pds">'</span></span>
+});
+
+<span class="pl-sv">module</span>.exports <span class="pl-k">=</span> User;</pre></div>
+
+<p>Here's how to hook it all up to passport in your express app.</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> express <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>),
+    passport <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>passport<span class="pl-pds">'</span></span>),
+
+    bodyParser <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>body-parser<span class="pl-pds">'</span></span>),
+    cookieParser <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>cookie-parser<span class="pl-pds">'</span></span>),
+    session <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>express-session<span class="pl-pds">'</span></span>),
+
+    User <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>./models/user<span class="pl-pds">'</span></span>),
+
+    app <span class="pl-k">=</span> express();
+
+
+app.use(bodyParser());
+app.use(<span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>connect-multiparty<span class="pl-pds">'</span></span>)());
+app.use(cookieParser());
+app.use(session({ secret<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>super-secret<span class="pl-pds">'</span></span> }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/madhurjain">madhurjain</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-58125540-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
