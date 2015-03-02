@@ -38,11 +38,9 @@ describe('Passport Local Sequelize', function () {
 
     beforeEach(function (done) {
         // Delete all users
-        User.destroy({}, { truncate: true })
-            .success(function () {
-                done();
-            })
-            .error(done);
+        User.destroy({ truncate: true }).then(function() {
+            done();
+        }).catch(done);
     });
 
     it('can define a User schema for you', function () {
