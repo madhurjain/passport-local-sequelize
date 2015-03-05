@@ -23,7 +23,8 @@
   ],
   "dependencies": {
     "passport-local": "~1.0.0",
-    "sequelize": "~2.0.2",
+    "sequelize": "~2.0.3",
+    "bluebird": "~2.4.2",
     "lodash": "~3.2.0"
   },
   "devDependencies": {
