@@ -73,7 +73,6 @@ describe('Passport Local Sequelize', function () {
                 });
             });
         }).catch(function (error) {
-            console.log(1);
             done(error);
         });
     });
