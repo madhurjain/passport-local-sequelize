@@ -52,7 +52,11 @@ describe('Passport Local Sequelize', function () {
     it('can register and authenticate a user', function (done) {
         should.exist(User.register);
 
-        User.register('someuser', 'somepass').then(function (registeredUser) {
+        User.register('someuser', 'somepass', function (err, registeredUser) {
+            if (err) {
+                return done(err);
+            }
+
             registeredUser.get('username').should.equal('someuser');
             registeredUser.get('id').should.be.above(0);
 
@@ -60,6 +64,7 @@ describe('Passport Local Sequelize', function () {
                 if (err) {
                     return done(err);
                 }
+
                 authenticated.should.equal(false);
 
                 registeredUser.authenticate('somepass', function (err, authenticatedUser) {
@@ -68,12 +73,12 @@ describe('Passport Local Sequelize', function () {
                     }
 
                     authenticatedUser.should.not.equal(false);
+
                     authenticatedUser.get('username').should.equal('someuser');
+
                     done();
                 });
             });
-        }).catch(function (error) {
-            done(error);
         });
     });
 });
