@@ -19,15 +19,16 @@ var initDb = function (done) {
 
     // Authenticate the db
     db.authenticate()
-        .complete(function (err) {
-            if (err) {
-                return done(err);
-            }
-
+        .then(function (err) {
             // Synchronize the db
-            db.sync({ force: true }).complete(function (err) {
-                done(err);
-            });
+            db.sync({ force: true })
+              .then(function() {
+                done();
+              })
+              .catch(done);
+        })
+        .catch(function(err) {
+            return done(err);
         });
 };
 
@@ -38,11 +39,11 @@ describe('Passport Local Sequelize', function () {
 
     beforeEach(function (done) {
         // Delete all users
-        User.destroy({}, { truncate: true })
-            .success(function () {
+        User.destroy({ truncate: true })
+            .then(function () {
                 done();
             })
-            .error(done);
+            .catch(done);
     });
 
     it('can define a User schema for you', function () {
