@@ -1,6 +1,6 @@
 {
   "name": "passport-local-sequelize",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Sequelize plugin that simplifies building username and password login with Passport",
   "main": "lib/passport-local-sequelize.js",
   "author": "Madhur Jain <mformadhur@gmail.com> (http://madhur.me/)",
@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "passport-local": "~1.0.0",
-    "sequelize": "~2.1.3",
+    "sequelize": "~3.1.1",
     "lodash": "~3.8.0"
   },
   "devDependencies": {
