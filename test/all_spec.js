@@ -19,7 +19,7 @@ var initDb = function (done) {
 
     // Authenticate the db
     db.authenticate()
-        .then(function (err) {
+        .then(function () {
             // Synchronize the db
             db.sync({ force: true })
               .then(function() {
