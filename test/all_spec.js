@@ -2,6 +2,7 @@
 
 var Sequelize = require('sequelize'),
     should = require('should'),
+    crypto = require('crypto'),
     passportLocalSequelize = require('../lib/passport-local-sequelize');
 
 var db = new Sequelize('test-db', 'user', 'pass', {
@@ -14,7 +15,8 @@ var User;
 
 var initDb = function (done) {
     User = passportLocalSequelize.defineUser(db, null, {
-        iterations: 1000
+        iterations: 1000,
+        digestAlgorithm: 'sha256'
     });
 
     // Authenticate the db
@@ -80,6 +82,18 @@ describe('Passport Local Sequelize', function () {
                     done();
                 });
             });
+        });
+    });
+
+    it('can create password hash with predefined digest algorithm', function(done){
+        const password = 'somepass';
+        User.register('someuser', password, function(err, registeredUser){
+            if (err){
+                return done(err);
+            }
+            const hash = new Buffer(crypto.pbkdf2Sync(password, registeredUser.salt, 1000, 512, 'sha256'), 'binary').toString('hex');
+            registeredUser.hash.should.equal(hash);
+            done();
         });
     });
 });
