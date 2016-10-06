@@ -1,7 +1,7 @@
 {
-  "name": "passport-local-sequelize-classy",
+  "name": "passport-local-sequelize",
   "version": "0.7.2",
-  "description": "Sequelize plugin that simplifies building username and password login with Passport, classy style",
+  "description": "Sequelize plugin that simplifies building username and password login with Passport",
   "main": "lib/passport-local-sequelize.js",
   "author": "Madhur Jain <mformadhur@gmail.com> (http://madhur.me/)",
   "license": "MIT",
