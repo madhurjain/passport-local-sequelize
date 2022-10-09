@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "jshint": "^2.13.5",
-    "mocha": "^8.4.0",
+    "mocha": "^10.0.0",
     "should": "^13.2.3",
     "sqlite3": "^5.1.2"
   }
